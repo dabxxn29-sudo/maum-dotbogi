@@ -88,6 +88,12 @@ export default function App() {
   // Delete
   const onDelete = (id) => {
     setRecords((m) => m.filter((r) => r.id != id))
+    // 방금 만든 카드를 지웠다면, 오늘의 마음 화면을 일기 쓰기로 되돌린다
+    // (안 그러면 지워진 카드를 보여 주려다 빈 화면이 된다)
+    if (id == currentId) {
+      setCurrentId(null)
+      setScreen('write')
+    }
   }
 
   const current = records.filter((r) => r.id == currentId)[0]
@@ -127,7 +133,10 @@ export default function App() {
       )}
 
       {/* ── 오늘의 마음 ── */}
-      {keyReady && tab == 'today' && screen == 'write' && <DiaryScreen onSave={onSave} />}
+      {/* 일기 쓰기 (보여 줄 카드가 없을 때도 일기 쓰기로) */}
+      {keyReady && tab == 'today' && (screen == 'write' || (screen == 'card' && !current)) && (
+        <DiaryScreen onSave={onSave} />
+      )}
 
       {keyReady && tab == 'today' && screen == 'pieces' && loading && (
         <View style={styles.box}>
