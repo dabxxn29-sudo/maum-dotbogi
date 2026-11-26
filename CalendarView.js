@@ -5,8 +5,8 @@ import { toDateString, toKoreanDate, todayString, COLORS } from './common'
 
 const DAY_NAMES = ['일', '월', '화', '수', '목', '금', '토']
 
-// 마음 달력 (마음날씨 캘린더 양식)
-// 날짜 칸에 그날의 날씨 아이콘을 보여 주고, 누르면 그날 고른 조각이 아래에 나온다
+// 마음 달력
+// 날짜 칸에 그날의 감정 아이콘을 보여 주고, 누르면 그날 고른 조각이 아래에 나온다
 export default function CalendarView({ records }) {
   const now = new Date()
   const [year, setYear] = useState(now.getFullYear())
@@ -61,7 +61,7 @@ export default function CalendarView({ records }) {
             if (day == 0) return <View style={styles.cell} />
             const date = toDateString(new Date(year, month, day))
             const dayRecords = records.filter((r) => r.date == date)
-            // 하루에 여러 장이면 가장 마지막에 쓴 카드의 날씨를 보여 준다
+            // 하루에 여러 장이면 가장 마지막에 쓴 카드의 감정을 보여 준다
             const last = dayRecords[dayRecords.length - 1]
             const emotion = last ? decideEmotion(last.pieces) || UNKNOWN : null
             return (

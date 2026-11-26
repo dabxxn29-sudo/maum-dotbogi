@@ -1,11 +1,12 @@
 // 마음 돋보기 감정 사전
 // 기본 감정 8개와 색 방향은 플루치크(Plutchik)의 감정바퀴를 따르고, 앱 분위기에 맞게 옅은 톤으로 조정했다
 // 세부 감정(조각) 4개씩은 대학생의 일기 표현에 맞게 팀이 구성한 초안이다
+// 아이콘은 감정 색 하트 (두려움은 초록이 신뢰와 겹쳐서 검은 하트)
 // 순서는 감정바퀴를 도는 순서: 기쁨 → 신뢰 → 두려움 → 놀람 → 슬픔 → 혐오 → 분노 → 기대
 
 export const EMOTIONS = [
   {
-    id: 'joy', label: '기쁨', icon: '☀️', weather: '맑음', color: '#FFF3D1', // 노랑
+    id: 'joy', label: '기쁨', icon: '💛', weather: '맑음', color: '#FFF3D1', // 노랑
     pieces: [
       { name: '뿌듯함', meaning: '내가 해낸 일이 자랑스러울 때' },
       { name: '즐거움', meaning: '하는 일이 재미있고 신날 때' },
@@ -14,7 +15,7 @@ export const EMOTIONS = [
     ],
   },
   {
-    id: 'trust', label: '신뢰', icon: '🌤️', weather: '화창', color: '#E6F4D7', // 연두
+    id: 'trust', label: '신뢰', icon: '💚', weather: '화창', color: '#E6F4D7', // 연두
     pieces: [
       { name: '감사함', meaning: '누군가에게 고마운 마음이 들 때' },
       { name: '든든함', meaning: '믿을 수 있는 사람이나 것이 곁에 있을 때' },
@@ -23,7 +24,7 @@ export const EMOTIONS = [
     ],
   },
   {
-    id: 'fear', label: '두려움', icon: '☁️', weather: '흐림', color: '#D6EFE4', // 초록
+    id: 'fear', label: '두려움', icon: '🖤', weather: '흐림', color: '#D6EFE4', // 초록
     pieces: [
       { name: '불안', meaning: '나쁜 일이 생길 것 같아 마음이 놓이지 않을 때' },
       { name: '걱정', meaning: '앞으로의 일이 마음에 걸릴 때' },
@@ -32,7 +33,7 @@ export const EMOTIONS = [
     ],
   },
   {
-    id: 'surprise', label: '놀람', icon: '🌈', weather: '무지개', color: '#DCEFF8', // 하늘
+    id: 'surprise', label: '놀람', icon: '🩵', weather: '무지개', color: '#DCEFF8', // 하늘
     pieces: [
       { name: '당황', meaning: '예상 못 한 일에 어쩔 줄 모를 때' },
       { name: '놀라움', meaning: '생각지 못한 일에 깜짝 놀랐을 때' },
@@ -41,7 +42,7 @@ export const EMOTIONS = [
     ],
   },
   {
-    id: 'sad', label: '슬픔', icon: '🌧️', weather: '비', color: '#D3DEEA', // 파랑
+    id: 'sad', label: '슬픔', icon: '💙', weather: '비', color: '#D3DEEA', // 파랑
     pieces: [
       { name: '서운함', meaning: '기대한 만큼 마음을 받지 못했을 때' },
       { name: '속상함', meaning: '일이 뜻대로 되지 않아 마음이 아플 때' },
@@ -50,7 +51,7 @@ export const EMOTIONS = [
     ],
   },
   {
-    id: 'disgust', label: '혐오', icon: '🌫️', weather: '안개', color: '#EADFF4', // 보라
+    id: 'disgust', label: '혐오', icon: '💜', weather: '안개', color: '#EADFF4', // 보라
     pieces: [
       { name: '싫증', meaning: '같은 일이 반복돼 더 하기 싫을 때' },
       { name: '불쾌함', meaning: '무언가가 마음에 거슬리고 기분이 상할 때' },
@@ -59,7 +60,7 @@ export const EMOTIONS = [
     ],
   },
   {
-    id: 'anger', label: '분노', icon: '⛈️', weather: '폭풍', color: '#F8DADA', // 빨강
+    id: 'anger', label: '분노', icon: '❤️', weather: '폭풍', color: '#F8DADA', // 빨강
     pieces: [
       { name: '짜증', meaning: '작은 일들이 계속 거슬릴 때' },
       { name: '억울함', meaning: '내 잘못이 아닌데 손해를 봤다고 느낄 때' },
@@ -68,7 +69,7 @@ export const EMOTIONS = [
     ],
   },
   {
-    id: 'anticipation', label: '기대', icon: '🌅', weather: '갬', color: '#FDE5CF', // 주황
+    id: 'anticipation', label: '기대', icon: '🧡', weather: '갬', color: '#FDE5CF', // 주황
     pieces: [
       { name: '설렘', meaning: '좋은 일을 기다리며 마음이 들뜰 때' },
       { name: '기대감', meaning: '앞으로의 일이 잘될 것 같을 때' },
@@ -83,7 +84,7 @@ export const EMOTIONS = [
 export const findEmotionByPiece = (pieceName) =>
   EMOTIONS.filter((e) => e.pieces.filter((p) => p.name == pieceName).length > 0)[0]
 
-// 고른 조각들로 오늘의 날씨(기본 감정) 정하기
+// 고른 조각들로 오늘의 대표 감정(기본 감정) 정하기
 // 가장 많이 고른 기본 감정을 쓰고, 개수가 같으면 먼저 고른 조각의 감정을 쓴다
 export const decideEmotion = (pieceNames) => {
   let best = null

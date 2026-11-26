@@ -5,10 +5,13 @@ import { todayString, toKoreanDate, COLORS, MAX_LENGTH } from './common'
 // 1번 화면: 오늘의 한 줄 일기 쓰기
 export default function DiaryScreen({ onSave }) {
   const [text, setText] = useState('')
+  const [cut, setCut] = useState(false) // 50자를 넘어서 잘렸는지
 
-  // 글자 수 제한: 50자를 넘으면 입력을 받지 않는다
+  // 글자 수 제한: 50자를 넘으면 앞의 50자만 남긴다
+  // (긴 글을 붙여 넣어도 앞부분은 들어가도록)
   const onChangeText = (value) => {
-    if (value.length <= MAX_LENGTH) setText(value)
+    setText(value.slice(0, MAX_LENGTH))
+    setCut(value.length > MAX_LENGTH)
   }
 
   const onPressSave = () => {
@@ -33,6 +36,7 @@ export default function DiaryScreen({ onSave }) {
       />
 
       <View style={styles.countRow}>
+        {cut && <Text style={styles.cut}>{MAX_LENGTH}자를 넘는 부분은 잘렸어요</Text>}
         <Text style={styles.count}>{text.length} / {MAX_LENGTH}</Text>
       </View>
 
@@ -63,7 +67,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: COLORS.ink,
   },
-  countRow: { alignItems: 'flex-end', marginTop: 6 },
+  countRow: { flexDirection: 'row', justifyContent: 'flex-end', marginTop: 6 },
+  cut: { fontSize: 12, color: COLORS.danger || '#C0504D', marginRight: 8 },
   count: { fontSize: 12, color: COLORS.quiet },
   button: {
     backgroundColor: COLORS.accent,

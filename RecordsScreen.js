@@ -11,7 +11,7 @@ const VIEWS = [
   { id: 'stats', label: '통계' },
 ]
 
-// 나의 기록: 목록(날씨 카드) / 달력(날씨 아이콘 달력) / 통계(감정 통계)
+// 나의 기록: 목록(감정 카드) / 달력(감정 아이콘 달력) / 통계(감정 통계)
 export default function RecordsScreen({ records, commentLoadingId, onUpdatePieces, onDelete }) {
   const [view, setView] = useState('cards')
 

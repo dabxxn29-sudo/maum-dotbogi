@@ -33,7 +33,7 @@ const TABS = [
 
 export default function App() {
   const [tab, setTab] = useState('today')
-  // 오늘의 마음 화면 순서: 'write'(일기 쓰기) → 'pieces'(조각 확인) → 'card'(날씨 카드)
+  // 오늘의 마음 화면 순서: 'write'(일기 쓰기) → 'pieces'(조각 확인) → 'card'(감정 카드)
   const [screen, setScreen] = useState('write')
   const [keyReady, setKeyReady] = useState(hasApiKey()) // AI 키 준비 여부
   const [diary, setDiary] = useState('')
@@ -69,7 +69,7 @@ export default function App() {
     })
   }
 
-  // Create: 조각 확정 → 기록 추가 → 날씨 카드
+  // Create: 조각 확정 → 기록 추가 → 감정 카드
   const onConfirm = (names) => {
     const id = records.length == 0 ? 1 : Math.max(...records.map((r) => r.id)) + 1
     setRecords([...records, { id, date: todayString(), diary, pieces: names, comment: null }])

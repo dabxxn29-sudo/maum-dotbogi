@@ -122,7 +122,7 @@ export default function PiecesScreen({
       <Text style={styles.count}>고른 조각 {selected.length} / {MAX_PIECES}</Text>
 
       <TouchableOpacity style={styles.button} onPress={onPressMake}>
-        <Text style={styles.buttonText}>이 조각들로 날씨 카드 만들기</Text>
+        <Text style={styles.buttonText}>이 조각들로 감정 카드 만들기</Text>
       </TouchableOpacity>
 
       <View style={styles.bottomRow}>

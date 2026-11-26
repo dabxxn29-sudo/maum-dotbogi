@@ -7,7 +7,7 @@ import { toKoreanDate, COLORS } from './common'
 
 const PAGE_SIZE = 4 // 한 번에 보여 줄 카드 수
 
-// 카드 목록: 최신순으로 4개씩 보여 주고, 누르면 날씨 카드 상세
+// 카드 목록: 최신순으로 4개씩 보여 주고, 누르면 감정 카드 상세
 // 상세에서 조각 다시 고르기(수정)와 삭제를 할 수 있다
 export default function CardList({ records, commentLoadingId, onUpdatePieces, onDelete }) {
   const [page, setPage] = useState(0)
@@ -40,7 +40,7 @@ export default function CardList({ records, commentLoadingId, onUpdatePieces, on
     )
   }
 
-  // ── 상세: 날씨 카드 ──
+  // ── 상세: 감정 카드 ──
   if (open) {
     const onPressDelete = () => {
       if (!confirmDelete) {
@@ -92,7 +92,7 @@ export default function CardList({ records, commentLoadingId, onUpdatePieces, on
 
   return (
     <View>
-      <Text style={styles.title}>나의 날씨 카드 {records.length}장</Text>
+      <Text style={styles.title}>나의 감정 카드 {records.length}장</Text>
       {records.length == 0 && <Text style={styles.help}>아직 기록이 없어요. 오늘의 마음을 먼저 적어 보세요.</Text>}
 
       {shown.map((r) => {
@@ -102,7 +102,7 @@ export default function CardList({ records, commentLoadingId, onUpdatePieces, on
           <TouchableOpacity style={[styles.item, { backgroundColor: emotion.color }]} onPress={() => setOpenId(r.id)}>
             <Text style={styles.itemIcon}>{emotion.icon}</Text>
             <View style={styles.itemBody}>
-              <Text style={styles.itemDate}>{toKoreanDate(r.date)} · {mix ? `✦ ${mix.dyad.name}` : emotion.weather}</Text>
+              <Text style={styles.itemDate}>{toKoreanDate(r.date)} · {mix ? `✦ ${mix.dyad.name}` : emotion.id ? emotion.label : emotion.weather}</Text>
               <Text style={styles.itemPieces}>{r.pieces.length > 0 ? r.pieces.join(', ') : UNKNOWN.label}</Text>
             </View>
           </TouchableOpacity>

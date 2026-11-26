@@ -3,9 +3,10 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import { decideEmotion, findEmotionByPiece, findDyad, UNKNOWN } from './emotions'
 import { KINDS } from './pieceAi'
 import WheelBar from './WheelBar'
+import { SoloOrb, MixOrb } from './Orb'
 import { toKoreanDate, COLORS } from './common'
 
-// 날씨 카드
+// 감정 카드
 // 앞면: 복합 감정이 있으면 두 렌즈가 겹친 모양, 없으면 렌즈 하나
 // 뒷면: 오늘 마음에 건네는 AI의 작은 추천 (카드를 누르면 뒤집힌다)
 export default function WeatherCard({ record, commentLoading }) {
@@ -35,15 +36,8 @@ export default function WeatherCard({ record, commentLoading }) {
 
             {mix ? (
               <View style={styles.face}>
-                {/* 두 렌즈가 겹친 모양: 두 감정이 섞인 날 */}
-                <View style={styles.venn}>
-                  <View style={[styles.ring, { borderColor: mix.first.color }]}>
-                    <Text style={styles.ringIcon}>{mix.first.icon}</Text>
-                  </View>
-                  <View style={[styles.ring, styles.ringRight, { borderColor: mix.second.color }]}>
-                    <Text style={styles.ringIcon}>{mix.second.icon}</Text>
-                  </View>
-                </View>
+                {/* 두 구슬이 이어지며 맞닿은 곳이 빛나는 모양: 두 감정이 섞인 날 */}
+                <MixOrb first={mix.first} second={mix.second} />
                 <Text style={styles.mixLabel}>✦ 오늘의 복합 감정 ✦</Text>
                 <Text style={styles.mixName}>{mix.dyad.name}</Text>
                 <Text style={styles.formula}>
@@ -54,11 +48,9 @@ export default function WeatherCard({ record, commentLoading }) {
               </View>
             ) : (
               <View style={styles.face}>
-                {/* 렌즈 하나: 한 감정이 또렷한 날 */}
-                <View style={[styles.lens, { borderColor: emotion.color }]}>
-                  <Text style={styles.icon}>{emotion.icon}</Text>
-                </View>
-                <Text style={[styles.weather, { color: emotion.color }]}>오늘의 마음날씨 · {emotion.weather}</Text>
+                {/* 빛나는 구슬 하나: 한 감정이 또렷한 날 */}
+                <SoloOrb emotion={emotion} />
+                <Text style={[styles.weather, { color: emotion.color }]}>오늘의 감정 · {emotion.id ? emotion.label : emotion.weather}</Text>
               </View>
             )}
 
@@ -113,32 +105,9 @@ const styles = StyleSheet.create({
   face: { flex: 1, alignItems: 'center', justifyContent: 'center' },
   date: { fontSize: 13, color: COLORS.quiet },
 
-  // 렌즈 하나
-  lens: {
-    width: 124,
-    height: 124,
-    borderRadius: 62,
-    borderWidth: 6,
-    backgroundColor: COLORS.paper,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  icon: { fontSize: 58 },
-  weather: { fontSize: 18, fontWeight: 'bold', marginTop: 12 },
+  weather: { fontSize: 18, fontWeight: 'bold', marginTop: 6 },
 
-  // 두 렌즈가 겹친 모양
-  venn: { flexDirection: 'row', alignItems: 'center' },
-  ring: {
-    width: 112,
-    height: 112,
-    borderRadius: 56,
-    borderWidth: 5,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  ringRight: { marginLeft: -36 }, // 왼쪽 렌즈와 겹치게
-  ringIcon: { fontSize: 40 },
-  mixLabel: { fontSize: 12, color: COLORS.star, marginTop: 12 },
+  mixLabel: { fontSize: 12, color: COLORS.star, marginTop: 6 },
   mixName: { fontSize: 32, fontWeight: 'bold', color: COLORS.ink, marginTop: 2 },
   formula: { fontSize: 14, color: COLORS.quiet, marginTop: 4 },
 
